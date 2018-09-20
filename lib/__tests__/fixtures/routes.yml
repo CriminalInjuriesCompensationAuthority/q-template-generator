@@ -1,0 +1,11 @@
+start-page: p-crime-not-reported
+
+p-crime-reported:
+    - goto: p-crime-not-reported
+      If: [==, q-crime-reported, No]
+    - goto: p-date-reported
+      If: [==, q-crime-reported, Yes]
+
+p-date-reported:
+    - goto: p-police-force
+      If: [dateNotInFuture, q-date-reported]
