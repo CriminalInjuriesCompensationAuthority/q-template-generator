@@ -1,0 +1,5 @@
+p-applicant-are-you-a-victim:
+- goto: p--number-of-attackers
+  if: [==, q-applicant-are-you-a-victim, yes]
+- goto: p--you-need-a-different-service
+  if: [==, q-applicant-are-you-a-victim, no]

@@ -1,0 +1,12 @@
+---
+template-name: apply-for-compensation
+start-page: p-applicant-are-you-a-british-citizen
+pages:
+- p-applicant-are-you-a-british-citizen
+- p-applicant-over-18
+- p--who-is-applying
+- p-applicant-are-you-a-victim
+- p--number-of-attackers
+- p--attacker-name
+- p--end-of-demo
+- p--you-need-a-different-service
