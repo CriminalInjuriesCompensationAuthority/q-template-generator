@@ -161,6 +161,7 @@
                         {
                             "target": "p-applicant-over-18",
                             "cond": [
+                                "==",
                                 "$.p-applicant-are-you-a-british-citizen.q-applicant-are-you-a-british-citizen.value",
                                 "true"
                             ]
@@ -168,6 +169,7 @@
                         {
                             "target": "p--you-need-a-different-service",
                             "cond": [
+                                "==",
                                 "$.p-applicant-are-you-a-british-citizen.q-applicant-are-you-a-british-citizen.value",
                                 "false"
                             ]
@@ -180,11 +182,19 @@
                     "ANSWER": [
                         {
                             "target": "p--who-is-applying",
-                            "cond": ["$.p-applicant-over-18.q-are-you-18-or-over.value", "true"]
+                            "cond": [
+                                "==",
+                                "$.p-applicant-over-18.q-are-you-18-or-over.value",
+                                "true"
+                            ]
                         },
                         {
                             "target": "p--you-need-a-different-service",
-                            "cond": ["$.p-applicant-over-18.q-are-you-18-or-over.value", "false"]
+                            "cond": [
+                                "==",
+                                "$.p-applicant-over-18.q-are-you-18-or-over.value",
+                                "false"
+                            ]
                         }
                     ]
                 }
@@ -195,6 +205,7 @@
                         {
                             "target": "p-applicant-are-you-a-victim",
                             "cond": [
+                                "==",
                                 "$.p--who-is-applying.q-who-are-you-applying-for.value",
                                 "myself"
                             ]
@@ -202,6 +213,7 @@
                         {
                             "target": "p--you-need-a-different-service",
                             "cond": [
+                                "==",
                                 "$.p--who-is-applying.q-who-are-you-applying-for.value",
                                 "someone-else"
                             ]
@@ -215,6 +227,7 @@
                         {
                             "target": "p--number-of-attackers",
                             "cond": [
+                                "==",
                                 "$.p-applicant-are-you-a-victim.q-applicant-are-you-a-victim.value",
                                 "true"
                             ]
@@ -222,6 +235,7 @@
                         {
                             "target": "p--you-need-a-different-service",
                             "cond": [
+                                "==",
                                 "$.p-applicant-are-you-a-victim.q-applicant-are-you-a-victim.value",
                                 "false"
                             ]
@@ -245,8 +259,9 @@
                         {
                             "target": "p--attacker-name",
                             "cond": [
-                                "$.p--number-of-attackers.q-number-of-attackers.value",
-                                "$.p--number-of-attackers.q-number-of-attackers.value"
+                                "answeredLessThan",
+                                "q-number-of-attackers",
+                                "q-number-of-attackers"
                             ]
                         },
                         {
