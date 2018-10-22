@@ -1,0 +1,42 @@
+template-name: complex-repeatable-section
+
+start-page: a
+
+a:
+    - goto: a
+      if: [==, 1, 1]
+    - goto: b
+
+b:
+    - goto: c
+    - goto: b
+    - goto: z
+
+c:
+    - goto: d
+
+d:
+    - goto: e
+
+e:
+    - goto: c
+    - goto: f
+      if: [==, 1, 1]
+
+f:
+    - goto: g
+    - goto: a
+
+g:
+    - goto: h
+    - goto: f
+
+h:
+    - goto: i
+
+i:
+    - goto: z
+
+z:
+    - goto: z
+      if: [==, 1, 1]

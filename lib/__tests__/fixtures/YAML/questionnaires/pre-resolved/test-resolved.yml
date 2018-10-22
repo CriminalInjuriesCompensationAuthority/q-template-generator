@@ -1,0 +1,39 @@
+template-name: apply-for-compensation
+
+start-page: p-applicant-are-you-a-british-citizen
+
+p-applicant-are-you-a-british-citizen:
+    - goto: p-applicant-over-18
+      if: [==, q-applicant-are-you-a-british-citizen, yes]
+    - goto: p--you-need-a-different-service
+      if: [==, q-applicant-are-you-a-british-citizen, no]
+
+p-applicant-over-18:
+    - goto: p--who-is-applying
+      if: [==, q-are-you-18-or-over, yes]
+    - goto: p--you-need-a-different-service
+      if: [==, q-are-you-18-or-over, no]
+
+p--who-is-applying:
+    - goto: p-applicant-are-you-a-victim
+      if: [==, q-who-are-you-applying-for, myself]
+    - goto: p--you-need-a-different-service
+      if: [==, q-who-are-you-applying-for, someone-else]
+
+p-applicant-are-you-a-victim:
+    - goto: p--number-of-attackers
+      if: [==, q-applicant-are-you-a-victim, yes]
+    - goto: p--you-need-a-different-service
+      if: [==, q-applicant-are-you-a-victim, no]
+
+p--number-of-attackers:
+    - goto: p--attacker-name
+
+p--attacker-name:
+    - goto: p--attacker-name
+      if: [answeredLessThan, p--attacker-name, q-number-of-attackers]
+    - goto: p--end-of-demo
+
+p--end-of-demo: []
+
+p--you-need-a-different-service: []
