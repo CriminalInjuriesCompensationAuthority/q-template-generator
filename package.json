@@ -1,6 +1,6 @@
 {
     "name": "q-template-generator",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Generates a questionnaire template from a YAML file that containing routing rules",
     "homepage": "",
     "author": "Stephen S <webstacker@outlook.com>",

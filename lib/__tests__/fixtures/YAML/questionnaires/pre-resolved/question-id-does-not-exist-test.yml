@@ -1,0 +1,16 @@
+template-name: question-id-does-not-exist-test
+
+start-page: a
+
+a:
+    - goto: b
+      if: [==, q-z, 1]
+    - goto: d
+
+b:
+    - goto: c
+
+c:
+    - goto: d
+
+d: []

@@ -1,0 +1,8 @@
+template-name: section-json-schema-file-does-not-exist
+
+start-page: a
+
+a:
+    - goto: no-json-schema-file-for-this-section
+
+no-json-schema-file-for-this-section: []

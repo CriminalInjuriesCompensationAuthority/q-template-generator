@@ -1,0 +1,6 @@
+template-name: missing-section-id-in-route-file-test
+start-page: p-applicant-are-you-a-british-citizen
+pages:
+    - p-applicant-are-you-a-british-citizen
+    - p-this-id-is-missing-in-route-definition
+    - p--who-is-applying
