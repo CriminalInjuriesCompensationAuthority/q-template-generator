@@ -1,0 +1,16 @@
+template-name: convoluted-condition
+
+start-page: a
+
+a:
+    - goto: b
+      if: [==, q-a, {}, 1, true, false, 'trick-q-id', null, [==, q-b, [==, q-c, q-d]]]
+    - goto: d
+
+b:
+    - goto: c
+
+c:
+    - goto: d
+
+d: []
