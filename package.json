@@ -1,6 +1,6 @@
 {
     "name": "q-template-generator",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "description": "Generates a questionnaire template from a YAML file that containing routing rules",
     "homepage": "",
     "author": "Stephen S <webstacker@outlook.com>",
@@ -68,7 +68,8 @@
     "jest": {
         "testEnvironment": "node",
         "testPathIgnorePatterns": [
-            "/fixtures/"
+            "/fixtures/",
+            "/helpers"
         ]
     },
     "license": "MIT",

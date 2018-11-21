@@ -1,0 +1,11 @@
+template-name: section-id-does-not-exist
+start-page: a
+
+a:
+    - goto: b
+      if: [==, 1, 1]
+    - goto: this-target-does-not-exist-in-the-routes
+      if: [==, 2, 2]
+    - goto: c
+b: []
+c: []
