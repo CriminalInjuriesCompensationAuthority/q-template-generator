@@ -1,9 +1,9 @@
 {
     "name": "q-template-generator",
-    "version": "0.1.0",
-    "description": "Generates a questionnaire template from a YAML file that containing routing rules",
+    "version": "0.2.0",
+    "description": "Generates a questionnaire template from a YAML file containing routing rules",
     "homepage": "",
-    "author": "Stephen S <webstacker@outlook.com>",
+    "author": "CICA",
     "files": [
         "lib"
     ],
@@ -28,7 +28,7 @@
     },
     "scripts": {
         "prepublishOnly": "nsp check",
-        "pretestzzz": "eslint .",
+        "pretest": "eslint .",
         "test": "jest",
         "coverage": "jest --coverage"
     },
