@@ -1,0 +1,5 @@
+p-invalid-yaml-keys:
+    - go to: p-applicant-are-you-a-victim
+      if: [==, q-a, myself]
+    - goto: p-somewhere
+      If: [==, q-b, myself]

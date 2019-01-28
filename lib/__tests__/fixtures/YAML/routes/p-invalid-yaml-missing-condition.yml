@@ -1,0 +1,5 @@
+p-invalid-yaml-missing-condition:
+    - goto: p--a
+      if: [==, 1, 1]
+    - goto: p--b
+    - goto: p--c

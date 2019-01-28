@@ -1,0 +1,4 @@
+template-name: invaid-route-yaml
+start-page: p-invalid-yaml-keys
+pages:
+    - p-invalid-yaml-keys

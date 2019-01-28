@@ -1,0 +1,4 @@
+template-name: invaid-route-yaml-missing-condition
+start-page: p-invalid-yaml-missing-condition
+pages:
+    - p-invalid-yaml-missing-condition
