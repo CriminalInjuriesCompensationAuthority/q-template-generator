@@ -1,4 +1,4 @@
-const qTemplateGenerator = require('../index.js')();
+const qTemplateGenerator = require('../lib/index')();
 const fs = require('fs');
 const path = require('path');
 
