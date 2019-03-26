@@ -1,6 +1,6 @@
-const qTemplateGenerator = require('../lib/index')();
 const fs = require('fs');
 const path = require('path');
+const qTemplateGenerator = require('../lib/index')();
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 function escapeRegExp(string) {
@@ -555,7 +555,7 @@ describe('Questionnaire template generator', () => {
                 }`
             );
 
-            expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+            expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
         });
 
         it('should throw if a route condition contains a question id that does not exist', () => {
@@ -567,7 +567,7 @@ describe('Questionnaire template generator', () => {
                 'Question id ("q-z") not found in any section'
             );
 
-            expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+            expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
         });
 
         it('should throw if a routes file does not exist', () => {
@@ -584,7 +584,7 @@ describe('Questionnaire template generator', () => {
                 `Route definition does not exist: "${expectedPath}"`
             );
 
-            expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+            expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
         });
 
         it('should throw if a routes file does not contain the appropriate section id', () => {
@@ -601,7 +601,7 @@ describe('Questionnaire template generator', () => {
                 `Route definition ("${expectedPath}") does not contain section id: "p-this-id-is-missing-in-route-definition"`
             );
 
-            expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+            expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
         });
 
         it('should throw if section JSON Schema file does not exist', () => {
@@ -618,7 +618,7 @@ describe('Questionnaire template generator', () => {
                 `Section JSON Schema definition does not exist: "${expectedPath}"`
             );
 
-            expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+            expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
         });
 
         describe('Invalid route file YAML', () => {
@@ -634,7 +634,7 @@ describe('Questionnaire template generator', () => {
                     `Route definition ("${expectedPath}") contains invalid key(s): "go to", "If". Allowed keys: "goto", "if"`
                 );
 
-                expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+                expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
             });
 
             it('should throw if a routes file has more than one "goto" statement without a condition', () => {
@@ -652,7 +652,7 @@ describe('Questionnaire template generator', () => {
                     `Route definition ("${expectedPath}") has more than one "goto" statement without a condition ("if")`
                 );
 
-                expect(() => qTemplateGenerator.generate(options)).toThrowError(rxExpectedError);
+                expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
             });
         });
     });
