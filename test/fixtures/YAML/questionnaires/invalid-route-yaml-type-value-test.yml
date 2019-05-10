@@ -1,0 +1,4 @@
+template-name: invaid-route-yaml
+start-page: p--attacker-name
+pages:
+    - p-invalid-yaml-type-value
