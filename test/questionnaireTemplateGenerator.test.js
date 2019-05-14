@@ -622,7 +622,7 @@ describe('Questionnaire template generator', () => {
         });
 
         describe('Invalid route file YAML', () => {
-            it('should throw if a routes file contains keys other than "goto" or "if"', () => {
+            it('should throw if a routes file contains keys other than "goto", "if" or "type"', () => {
                 const options = {
                     questionnaireMetadataFilePath: `${__dirname}/fixtures/YAML/questionnaires/invalid-route-yaml-keys-test.yml`,
                     sectionsDirPath: `${__dirname}/fixtures/YAML/sections/`,
@@ -631,7 +631,7 @@ describe('Questionnaire template generator', () => {
 
                 const expectedPath = path.join(options.routesDirPath, 'p-invalid-yaml-keys.yml');
                 const rxExpectedError = errorMessageToRegExp(
-                    `Route definition ("${expectedPath}") contains invalid key(s): "go to", "If". Allowed keys: "goto", "if"`
+                    `Route definition ("${expectedPath}") contains invalid key(s): "go to", "If". Allowed keys: "goto", "if", "type"`
                 );
 
                 expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
@@ -650,6 +650,37 @@ describe('Questionnaire template generator', () => {
                 );
                 const rxExpectedError = errorMessageToRegExp(
                     `Route definition ("${expectedPath}") has more than one "goto" statement without a condition ("if")`
+                );
+
+                expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
+            });
+
+            it('should throw if a routes file contains a "type" value other than "final"', () => {
+                const options = {
+                    questionnaireMetadataFilePath: `${__dirname}/fixtures/YAML/questionnaires/invalid-route-yaml-type-value-test.yml`,
+                    sectionsDirPath: `${__dirname}/fixtures/YAML/sections/`,
+                    routesDirPath: `${__dirname}/fixtures/YAML/routes/`
+                };
+
+                const expectedPath = path.join(
+                    options.routesDirPath,
+                    'p-invalid-yaml-type-value.yml'
+                );
+                const rxExpectedError = errorMessageToRegExp(
+                    `Route definition ("${expectedPath}") contains an invalid value for the type key: "Invalid". Allowed values: "final"`
+                );
+
+                expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
+            });
+
+            it('should throw if a routes file contains a "summary" which doesnt exist', () => {
+                const options = {
+                    questionnaireMetadataFilePath: `${__dirname}/fixtures/YAML/questionnaires/invalid-route-yaml-invalid-summary.yml`,
+                    sectionsDirPath: `${__dirname}/fixtures/YAML/sections/`,
+                    routesDirPath: `${__dirname}/fixtures/YAML/routes/`
+                };
+                const rxExpectedError = errorMessageToRegExp(
+                    `Questionnaire summary key targets a section id ("p-not-a-summary") that does not exist ("summary: p-not-a-summary").`
                 );
 
                 expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);

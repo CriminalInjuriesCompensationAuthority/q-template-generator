@@ -1,0 +1,10 @@
+template-name: invaid-route-yaml
+start-page: p--attacker-name
+summary: p-not-a-summary
+pages:
+    - p--attacker-name
+    - p--who-is-applying
+    - p--end-of-demo
+    - p-applicant-are-you-a-victim
+    - p--you-need-a-different-service
+    - p--number-of-attackers
