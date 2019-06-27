@@ -292,7 +292,9 @@ describe('Questionnaire template generator', () => {
                     'p--end-of-demo': {},
                     'p--you-need-a-different-service': {}
                 }
-            }
+            },
+            answers: {},
+            progress: 'p-applicant-are-you-a-british-citizen'
         };
     });
 
