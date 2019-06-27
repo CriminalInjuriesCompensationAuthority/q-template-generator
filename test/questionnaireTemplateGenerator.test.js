@@ -294,7 +294,7 @@ describe('Questionnaire template generator', () => {
                 }
             },
             answers: {},
-            progress: 'p-applicant-are-you-a-british-citizen'
+            progress: ['p-applicant-are-you-a-british-citizen']
         };
     });
 
