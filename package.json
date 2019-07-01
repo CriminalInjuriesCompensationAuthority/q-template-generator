@@ -54,9 +54,9 @@
             "prettier": "^1.14.3"
         },
         "blocks": [
+            ".eslintignore",
             ".eslintrc.js",
             ".huskyrc.js",
-            ".eslintignore",
             ".lintstagedrc.js",
             ".prettierrc.js",
             "jest.config.js",
