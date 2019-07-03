@@ -13,10 +13,294 @@ function errorMessageToRegExp(errorMessage) {
 
 describe('Questionnaire template generator', () => {
     let questionnaireTemplate;
+    let questionnaireTemplateWithVersion;
 
     beforeEach(() => {
         questionnaireTemplate = {
-            uri: 'apply-for-compensation',
+            type: 'apply-for-compensation',
+            sections: {
+                'p-applicant-are-you-a-british-citizen': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id:
+                        'http://localhost:3000/schema/definitions/applicant-are-you-a-british-citizen',
+                    type: 'object',
+                    required: ['q-applicant-are-you-a-british-citizen'],
+                    additionalProperties: false,
+                    properties: {
+                        'q-applicant-are-you-a-british-citizen': {
+                            type: 'boolean',
+                            title: 'Are you a British citizen?',
+                            errorMessages: {
+                                required: 'You need to tell us if you are a British citizen'
+                            }
+                        }
+                    }
+                },
+                'p-applicant-over-18': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/applicant-over-18',
+                    type: 'object',
+                    required: ['q-are-you-18-or-over'],
+                    additionalProperties: false,
+                    properties: {
+                        'q-are-you-18-or-over': {
+                            type: 'boolean',
+                            title: 'Are you 18 or over?',
+                            errorMessages: {
+                                required: 'Tell us if you are old enough'
+                            }
+                        }
+                    }
+                },
+                'p--who-is-applying': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/who-are-you-applying-for',
+                    type: 'object',
+                    required: ['q-who-are-you-applying-for'],
+                    additionalProperties: false,
+                    properties: {
+                        'q-who-are-you-applying-for': {
+                            title: 'Who are you applying for?',
+                            type: 'string',
+                            uniqueItems: true,
+                            items: {
+                                oneOf: [
+                                    {
+                                        title: 'Myself',
+                                        enum: ['myself']
+                                    },
+                                    {
+                                        title: 'Someone else',
+                                        enum: ['someone-else']
+                                    }
+                                ]
+                            },
+                            errorMessages: {
+                                required: 'Tell us who you are applying for'
+                            }
+                        }
+                    }
+                },
+                'p-applicant-are-you-a-victim': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/p-applicant-are-you-a-victim',
+                    type: 'object',
+                    required: ['q-applicant-are-you-a-victim'],
+                    additionalProperties: false,
+                    properties: {
+                        'q-applicant-are-you-a-victim': {
+                            type: 'boolean',
+                            title: 'Are you a victim of sexual violence or abuse?',
+                            errorMessages: {
+                                required: 'Select the appropriate option'
+                            }
+                        }
+                    }
+                },
+                'p--number-of-attackers': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/p--number-of-attackers',
+                    title: 'Number of attackers',
+                    type: 'object',
+                    required: ['q-number-of-attackers'],
+                    properties: {
+                        'q-number-of-attackers': {
+                            title: 'How many attackers were involved in the incident?',
+                            type: 'integer',
+                            errorMessages: {
+                                required: 'Enter the number of people who attacked you',
+                                type: 'Enter a number'
+                            }
+                        }
+                    }
+                },
+                'p--attacker-name': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/p--attacker-name',
+                    title: 'Enter their name',
+                    type: 'object',
+                    required: ['q-attacker-first-name', 'q-attacker-last-name'],
+                    additionalProperties: false,
+                    properties: {
+                        'q-attacker-first-name': {
+                            title: 'First name',
+                            type: 'string',
+                            errorMessages: {
+                                required: "Enter the attacker's first name"
+                            }
+                        },
+                        'q-attacker-last-name': {
+                            title: 'Last name',
+                            type: 'string',
+                            errorMessages: {
+                                required: "Enter the attacker's last name"
+                            }
+                        }
+                    }
+                },
+                'p--end-of-demo': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/p--end-of-demo',
+                    type: 'object',
+                    title: 'End of demo',
+                    additionalProperties: false,
+                    properties: {
+                        'q-crimedetails': {
+                            type: 'string',
+                            classification: 'markup',
+                            enum: ['<p>This is the last page of the demonstration.</p>'],
+                            default: '/enum/0'
+                        }
+                    }
+                },
+                'p--you-need-a-different-service': {
+                    $schema: 'http://json-schema.org/draft-04/schema#',
+                    id: 'http://localhost:3000/schema/definitions/you-need-a-different-service',
+                    type: 'object',
+                    title: 'You need a different service',
+                    additionalProperties: false,
+                    properties: {
+                        'q-crimedetails': {
+                            type: 'string',
+                            classification: 'markup',
+                            enum: [
+                                '<p><strong>This service is currently a beta service.</strong></p><p>You must continue your application for compensation using a different service.</p>'
+                            ],
+                            default: '/enum/0'
+                        }
+                    }
+                }
+            },
+            routes: {
+                initial: 'p-applicant-are-you-a-british-citizen',
+                states: {
+                    'p-applicant-are-you-a-british-citizen': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p-applicant-over-18',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-a-british-citizen.q-applicant-are-you-a-british-citizen',
+                                        'true'
+                                    ]
+                                },
+                                {
+                                    target: 'p--you-need-a-different-service',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-a-british-citizen.q-applicant-are-you-a-british-citizen',
+                                        'false'
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    'p-applicant-over-18': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p--who-is-applying',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-over-18.q-are-you-18-or-over',
+                                        'true'
+                                    ]
+                                },
+                                {
+                                    target: 'p--you-need-a-different-service',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-over-18.q-are-you-18-or-over',
+                                        'false'
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    'p--who-is-applying': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p-applicant-are-you-a-victim',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p--who-is-applying.q-who-are-you-applying-for',
+                                        'myself'
+                                    ]
+                                },
+                                {
+                                    target: 'p--you-need-a-different-service',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p--who-is-applying.q-who-are-you-applying-for',
+                                        'someone-else'
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    'p-applicant-are-you-a-victim': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p--number-of-attackers',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-a-victim.q-applicant-are-you-a-victim',
+                                        'true'
+                                    ]
+                                },
+                                {
+                                    target: 'p--you-need-a-different-service',
+                                    cond: [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-a-victim.q-applicant-are-you-a-victim',
+                                        'false'
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    'p--number-of-attackers': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p--attacker-name'
+                                }
+                            ]
+                        }
+                    },
+                    'p--attacker-name': {
+                        on: {
+                            ANSWER: [
+                                {
+                                    target: 'p--attacker-name',
+                                    cond: [
+                                        'answeredLessThan',
+                                        'p--attacker-name',
+                                        '$.answers.p--number-of-attackers.q-number-of-attackers'
+                                    ]
+                                },
+                                {
+                                    target: 'p--end-of-demo'
+                                }
+                            ]
+                        }
+                        // TODO: Logic for auto repeatable insertion needs looked at. Un-comment when ready.
+                        // ,repeatable: true
+                    },
+                    'p--end-of-demo': {},
+                    'p--you-need-a-different-service': {}
+                }
+            },
+            answers: {},
+            progress: ['p-applicant-are-you-a-british-citizen']
+        };
+
+        questionnaireTemplateWithVersion = {
+            type: 'apply-for-compensation',
+            version: '0.0.4',
             sections: {
                 'p-applicant-are-you-a-british-citizen': {
                     $schema: 'http://json-schema.org/draft-04/schema#',
@@ -340,7 +624,7 @@ describe('Questionnaire template generator', () => {
 
             const questionnaireTemplateJSON = qTemplateGenerator.generate(options);
             const questionnaire = JSON.parse(questionnaireTemplateJSON);
-            expect(questionnaire).toEqual(questionnaireTemplate);
+            expect(questionnaire).toEqual(questionnaireTemplateWithVersion);
         });
 
         // TODO: Logic for auto repeatable insertion needs looked at. Un-comment when ready.
@@ -621,6 +905,18 @@ describe('Questionnaire template generator', () => {
             );
 
             expect(() => qTemplateGenerator.generate(options)).toThrow(rxExpectedError);
+        });
+
+        it('should add a version number to the output if the questionnaire includes one', () => {
+            const options = {
+                questionnaireMetadataFilePath: `${__dirname}/fixtures/YAML/questionnaires/testWithVersion.yml`,
+                sectionsDirPath: `${__dirname}/fixtures/YAML/sections/`,
+                routesDirPath: `${__dirname}/fixtures/YAML/routes/`
+            };
+
+            const questionnaireTemplateJSON = qTemplateGenerator.generate(options);
+            const questionnaire = JSON.parse(questionnaireTemplateJSON);
+            expect(questionnaire).toEqual(questionnaireTemplateWithVersion);
         });
 
         describe('Invalid route file YAML', () => {
