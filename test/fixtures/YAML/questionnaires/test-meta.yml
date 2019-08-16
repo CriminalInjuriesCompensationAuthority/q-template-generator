@@ -1,0 +1,20 @@
+---
+template-name: apply-for-compensation
+start-page: p-applicant-are-you-a-british-citizen
+meta:
+    onComplete:
+        tasks:
+            - emailTemplateId: 1ddf1d87-09b3-4a2b-aa27-d73823f4a886
+              emailTemplatePlaceholderMap:
+                applicantName: "/answers/p-applicant-enter-your-name/q-applicant-name-firstname"
+                applicantEmail: "/answers/p-applicant-enter-your-email-address/q-applicant-email-address"
+                caseReference: "/answers/system/case-reference"
+pages:
+- p-applicant-are-you-a-british-citizen
+- p-applicant-over-18
+- p--who-is-applying
+- p-applicant-are-you-a-victim
+- p--number-of-attackers
+- p--attacker-name
+- p--end-of-demo
+- p--you-need-a-different-service

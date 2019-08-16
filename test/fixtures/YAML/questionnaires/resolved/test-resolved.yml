@@ -1,7 +1,6 @@
 template-name: apply-for-compensation
 version: 0.0.4
 start-page: p-applicant-are-you-a-british-citizen
-
 p-applicant-are-you-a-british-citizen:
     - goto: p-applicant-over-18
       if: [==, q-applicant-are-you-a-british-citizen, yes]
